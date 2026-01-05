@@ -211,6 +211,7 @@ function syncToSlide(targetSlide) {
 
     if (diff === 1) {
         // Normal next slide progression
+        currentSlide = targetSlide;
         nextSlideLocal();
     } else if (targetSlide === -1 && currentSlide !== -1) {
         // Restart to beginning
@@ -244,11 +245,22 @@ function initPresentation() {
 }
 
 async function nextSlide() {
+    const textContent = document.getElementById('textContent');
+    const slideText = textContent.querySelector('.slide-text');
+    const nextBtn = document.getElementById('nextBtn');
+
     // Don't hide previous media - keep them visible!
     // Each new media adds to the scene
 
     // Move to next slide
     currentSlide++;
+
+    // Check if presentation is complete
+    if (currentSlide >= slides.length) {
+        // End of presentation
+        showEndScreen();
+        return;
+    }
 
     // Update Supabase to sync with all clients
     if (!isLocalAction) {
@@ -262,13 +274,6 @@ function nextSlideLocal() {
     const textContent = document.getElementById('textContent');
     const slideText = textContent.querySelector('.slide-text');
     const nextBtn = document.getElementById('nextBtn');
-
-    // Check if presentation is complete
-    if (currentSlide >= slides.length) {
-        // End of presentation
-        showEndScreen();
-        return;
-    }
 
     // Animate out current text
     textContent.classList.remove('show');
