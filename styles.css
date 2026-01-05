@@ -167,6 +167,7 @@ body {
     width: 60%;
     max-width: 500px;
     z-index: 20;
+    display: none;
 }
 
 .progress-bar {
