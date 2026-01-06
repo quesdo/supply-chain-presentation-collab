@@ -30,6 +30,48 @@ body {
     :root { font-size: 14px; }
 }
 
+/* ===== LANGUAGE SELECTOR ===== */
+.language-selector {
+    position: fixed;
+    top: 2vh;
+    right: 2vw;
+    z-index: 30;
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(0, 26, 46, 0.8);
+    padding: 0.5rem;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    min-width: 40px;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.lang-btn.active {
+    background: linear-gradient(135deg, #1976d2, #4da6ff);
+    color: white;
+    border-color: #4da6ff;
+    box-shadow: 0 0 15px rgba(77, 166, 255, 0.5);
+}
+
 /* ===== STARS BACKGROUND ===== */
 .stars-container {
     position: fixed;
@@ -178,7 +220,17 @@ body {
     overflow: hidden;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     margin-bottom: 0.5rem;
-    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #1976d2, #4da6ff);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.6s ease;
+    box-shadow: 0 0 10px rgba(77, 166, 255, 0.8);
 }
 
 .progress-text {
