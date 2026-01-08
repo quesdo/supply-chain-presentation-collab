@@ -74,6 +74,7 @@ body {
 
 /* ===== STARS BACKGROUND ===== */
 .stars-container {
+    display: none; /* Hidden - solid background only */
     position: fixed;
     top: 0;
     left: 0;
