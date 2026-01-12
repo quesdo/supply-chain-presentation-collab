@@ -345,6 +345,10 @@ function nextSlideLocal() {
     if (!soundStarted) {
         toggleVisibility("Supply Chain Sound", true);
         soundStarted = true;
+
+        // HIDE AS IS Supply Chain and SHOW SUP Content immediately when starting
+        hideASISSupplyChain();
+        showMedia("SUP Content");
     }
 
     currentSlide++;
@@ -363,10 +367,6 @@ function nextSlideLocal() {
 
         if (slide.media) {
             showMedia(slide.media);
-
-            if (slide.media === "SUP Content") {
-                hideASISSupplyChain();
-            }
         }
 
         textContent.classList.remove('slide-out');
