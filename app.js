@@ -410,11 +410,8 @@ function showEndScreen() {
 }
 
 async function restartPresentation() {
-    if (!isLocalAction) {
-        await updateSession({ current_slide: -1 });
-    }
-
-    restartPresentationLocal();
+    // Simply reload the page for a clean restart
+    window.location.reload();
 }
 
 function restartPresentationLocal() {
