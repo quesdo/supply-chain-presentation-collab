@@ -475,27 +475,36 @@ async function initSupabase() {
     const { createClient } = supabase;
     supabaseClient = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-    const { data, error } = await supabaseClient
+    const sessionKey = new URLSearchParams(window.location.search).get('session') || 'default';
+    console.log('Session key:', sessionKey);
+
+    let { data, error } = await supabaseClient
         .from('supply_chain_presentation_session')
         .select('*')
+        .eq('session_key', sessionKey)
         .single();
 
-    if (error) {
-        console.error('Error fetching Supply Chain presentation session:', error);
-        return;
+    if (error || !data) {
+        const { data: newRow, error: insertError } = await supabaseClient
+            .from('supply_chain_presentation_session')
+            .insert({ session_key: sessionKey, current_slide: -1 })
+            .select().single();
+        if (insertError) { console.error('Error creating session:', insertError); return; }
+        data = newRow;
     }
 
     sessionId = data.id;
-    console.log('Connected to Supply Chain presentation session:', sessionId);
+    console.log('Connected to Supply Chain presentation session:', sessionId, '(key:', sessionKey, ')');
 
     realtimeChannel = supabaseClient
-        .channel('supply_chain_presentation_session_changes')
+        .channel(`supply_chain_collab_${sessionKey}`)
         .on(
             'postgres_changes',
             {
                 event: 'UPDATE',
                 schema: 'public',
-                table: 'supply_chain_presentation_session'
+                table: 'supply_chain_presentation_session',
+                filter: `id=eq.${sessionId}`
             },
             handleSessionUpdate
         )
