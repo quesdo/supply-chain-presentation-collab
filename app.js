@@ -475,7 +475,7 @@ async function initSupabase() {
     const { createClient } = supabase;
     supabaseClient = createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 
-    const sessionKey = new URLSearchParams(window.location.search).get('session') || 'default';
+    const sessionKey = new URLSearchParams(window.location.search).get('session') || 'collab';
     console.log('Session key:', sessionKey);
 
     let { data, error } = await supabaseClient
